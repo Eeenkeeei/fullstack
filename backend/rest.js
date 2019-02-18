@@ -29,7 +29,7 @@ server.get('/items', (req, res, next) => {
     next();
 });
 
-server.post('/items', (req, res, next) => {
+server.post('/items', (req, res, next) => {  // req- запрос, res-ответ
     const {id} = req.body;
     if (typeof id !== 'number') {
         next(new BadRequestError('Invalid JSON, must contain id'));

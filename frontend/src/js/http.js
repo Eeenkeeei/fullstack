@@ -2,35 +2,33 @@ export class Http {
     constructor(url) {
         this.url = url;
     }
-    getAll(callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', this.url);
-        xhr.addEventListener('load', ()=> {
-            const data = JSON.parse(xhr.responseText);
-            callback(data);
-        });
-        xhr.send();
+
+    getAll() {
+        return fetch(this.url);
     }
 
-    save(item, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', this.url);
-        xhr.addEventListener('load', ()=> {
-            callback();
-
+    save(item) {
+        return fetch(this.url, {
+            body: JSON.stringify(item),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(item));
     }
 
-    removeById(id, callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('DELETE', `${this.url}/${id}`);
-        xhr.addEventListener('load', ()=> {
-            callback();
-
+    add (item) {
+        return fetch(`${this.url}/${item.name}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
+    }
 
-        xhr.send();
+    removeById(id) {
+        return fetch(`${this.url}/${id}`, {
+            method: 'DELETE'
+        });
     }
 }
